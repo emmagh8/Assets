@@ -7,8 +7,8 @@
 
  Section | Description | Status |
 |---|---|---|
-| [📚 Fundamentals](Fundamentals/README.md) | Networking, Linux, Windows | 🟡 In Progress |
-| [🔍 SOC Level 1](SOC-Level-1/README.md) | TryHackMe SOC L1 path | 🟡 In Progress |
+| [📚 Fundamentals](Assets/Fundamentals/README.md) | Networking, Linux, Windows | 🟡 In Progress |
+| [🔍 SOC Level 1](Assets/SOC-Level-1/README.md) | TryHackMe SOC L1 path | 🟡 In Progress |
 
 
 ---
