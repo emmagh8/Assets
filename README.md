@@ -5,10 +5,6 @@
 
 ## Table of Contents
 
- Section | Description | Status |
-|---|---|---|
-| [📚 Fundamentals](#Assets/Fundamentals/README.md) | Networking, Linux, Windows | 🟡 In Progress |
-| [🔍 SOC Level 1](#Assets/SOC-Level-1/README.md) | TryHackMe SOC L1 path | 🟡 In Progress |
-
-
+- [Fundamentals](assets/basics.md)
+- [SOC Level 1](assets/soc-level1.md)
 ---
