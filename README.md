@@ -5,6 +5,6 @@
 
 ## Table of Contents
 
-- [Fundamentals](assets/basics.md)
-- [SOC Level 1](assets/soc-level1.md)
+- [Fundamentals](assets/fundamentals/)
+- [SOC Level 1](assets/soc-level1/)
 ---
