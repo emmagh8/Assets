@@ -5,6 +5,6 @@
 
 ## Table of Contents
 
-- [Fundamentals](assets/fundamentals/)
+- [Fundamentals](assets/fundamentals/networking.md)
 - [SOC Level 1](assets/soc-level1/)
 ---
