@@ -4,7 +4,11 @@
 
 
 ## Table of Contents
-
-- [Fundamentals](assets/fundamentals/networking.md)
-- [SOC Level 1](assets/soc-level1/)
+### 1. 🛡️ Fundamentals 
+* [🌐 Networking](./Fundamentals/Networking/README.md) 
+* [🪟 Windows](./Fundamentals/Windows/README.md)
+* [🐧 Linux](./Fundamentals/Linux/README.md)
+### 2. 🛡️ SOC Level 1 
+* [🔍 Security Operations Intro](./SOC_L1/Intro/README.md) 
+* [📈 Monitoring & Logging](./SOC_L1/Monitoring/README.md)
 ---
