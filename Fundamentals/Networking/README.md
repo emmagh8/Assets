@@ -41,14 +41,13 @@ To ensure data reaches the correct receiver without getting lost, computer netwo
 * **What it is:** A dynamic logical address assigned to a device when it connects to a network for exampel `192.168.1.15` or `8.8.8.8`.
 * **Purpose:** Used for routing data across **different networks (WAN / Internet)**.
 * **How it works:** A device called a **Router** reads the destination IP address of the incoming packet and determines the best path to forward the data across the internet until it safely reaches the target network.
+#### 3. Network Types & Topologies.
 
-### Roadmap: What I Am Learning
+----
 
 To master networking from both a defensive (SOC) and offensive (Security Specialist) perspective, I am diving deep into the following core concepts:
-
-- [ ] **Network Types & Topologies** (LAN, WAN, Star, Mesh)
-- [ ] **The OSI Model & TCP/IP Suite** (The 7 layers of communication)
-- [ ] **IP Addressing & Subnetting** (IPv4, IPv6, Public vs. Private IPs)
-- [ ] **Core Protocols** (TCP, UDP, DNS, DHCP, HTTP/S, ARP)
-- [ ] **Network Devices** (Hubs, Switches, Routers, Firewalls)
-- [ ] **Traffic Analysis & Tools** (Wireshark, Packet Analysis)
+* [The OSI Model & TCP/IP](./Fundamentals/Networking/OSI-Model-TCP-IP/README.md) 
+* [IP Addressing & Subnetting](./Fundamentals/Networking/IP-Addressing-Subnetting/README.md)
+* [Core Protocols](./Fundamentals/Networking/Core-Protocols/README.md)
+* [Network Devices](./Fundamentals/Networking/Network-Devices/README.md) 
+* [Traffic Analysis & Tools](./Fundamentals/Networking/Traffic-Analysis-Tools/README.md) 
