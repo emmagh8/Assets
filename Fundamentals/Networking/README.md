@@ -42,8 +42,12 @@ To ensure data reaches the correct receiver without getting lost, computer netwo
 * **Purpose:** Used for routing data across **different networks (WAN / Internet)**.
 * **How it works:** A device called a **Router** reads the destination IP address of the incoming packet and determines the best path to forward the data across the internet until it safely reaches the target network.
 #### 3. Network Types & Topologies.
+<div align="center">
+  <h3>Types of Computer Networks</h3>
+  <p>A visual hierarchy of computer networks from personal devices to global infrastructures.</p>
 
-----
+  <img src="../../Assets/Fundamentals/Networking/Types of computer network.png" width="1000" height="auto">
+</div>
 
 To master networking from both a defensive (SOC) and offensive (Security Specialist) perspective, I am diving deep into the following core concepts:
 * [The OSI Model & TCP/IP](./Fundamentals/Networking/OSI-Model-TCP-IP/README.md) 
