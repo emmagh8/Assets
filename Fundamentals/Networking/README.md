@@ -47,7 +47,7 @@ To ensure data reaches the correct receiver without getting lost, computer netwo
 
 <div align="center">
   <p>A visual hierarchy of computer networks from personal devices to global infrastructures.</p>
-  <img src="https://github.com/emmagh8/Assets/blob/main/Fundamentals/Networking/Types%20of%20computer%20network.png?raw=true">
+  <img src="https://github.com/emmagh8/Assets/blob/main/Fundamentals/Networking/Types%20of%20computer%20network.png?raw=true" width="500" height="auto">
 </div>
 
 
@@ -55,25 +55,70 @@ To ensure data reaches the correct receiver without getting lost, computer netwo
 #### 2. Network Topologies (Physical Layout)
 The choice of topology is critical because it determines how efficiently data moves and how the network handles a failure. Here is a breakdown of how those "lines and objects" are typically arranged:
 
-### Star Topology
-- **Concept:** Every node is connected to a central hub/switch.
-- **Reliability:** High (single node failure doesn't affect others).
-- **Usage:** Standard for modern LANs.
+----
+<div style="overflow: hidden; margin-bottom: 20px;">
+  <img src="https://github.com/emmagh8/Assets/blob/main/Fundamentals/Networking/Star_Topology.jpeg?raw=true" 
+       align="right" 
+       width="150" 
+       style="margin-left: 20px; margin-bottom: 10px;">
 
-### Mesh Topology
-- **Concept:** Nodes are interconnected with multiple redundant paths.
-- **Reliability:** Extremely High (multiple paths available).
-- **Usage:** Basis for the Internet (WAN/GAN).
+  <h3 style="margin-top: 0;">Star Topology</h3>
+  <ul>
+    <li><b>Concept:</b> Every node is connected to a central hub/switch.</li>
+    <li><b>Reliability:</b> High (single node failure doesn't affect others).</li>
+    <li><b>Usage:</b> Standard for modern LANs.</li>
+  </ul>
+</div>
 
-### Tree Topology
-- **Concept:** A hierarchical structure combining Star and Bus characteristics.
-- **Reliability:** High.
-- **Usage:** Large Corporate Sites and Campus Area Networks (CAN).
+<img src="[YOUR_NEXT_IMAGE_URL](https://github.com/emmagh8/Assets/blob/main/Fundamentals/Networking/Star_Topology.jpeg?raw=true)" width="100%">
 
-### Bus Topology
-- **Concept:** All nodes share a single communication line.
-- **Reliability:** Low (backbone failure stops the entire network).
-- **Usage:** Legacy systems or simple low-cost setups.
+<hr>
+
+<!-- MESH TOPOLOGY -->
+<div style="overflow: hidden; margin-bottom: 25px;">
+  <img src="https://github.com/emmagh8/Assets/blob/main/Fundamentals/Networking/Mesh_Topology.jpeg?raw=true" 
+       align="right" 
+       width="150" 
+       style="margin-left: 20px; border-radius: 5px;">
+  <h3>Mesh Topology</h3>
+  <ul style="margin-top: 0;">
+    <li><b>Concept:</b> Nodes are interconnected with multiple redundant paths.</li>
+    <li><b>Reliability:</b> Extremely High (multiple paths available).</li>
+    <li><b>Usage:</b> Basis for the Internet (WAN/GAN).</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- TREE TOPOLOGY -->
+<div style="overflow: hidden; margin-bottom: 25px;">
+  <img src="https://github.com/emmagh8/Assets/blob/main/Fundamentals/Networking/Tree_Topology.jpeg?raw=true" 
+       align="right" 
+       width="150" 
+       style="margin-left: 20px; border-radius: 5px;">
+  <h3>Tree Topology</h3>
+  <ul style="margin-top: 0;">
+    <li><b>Concept:</b> A hierarchical structure combining Star and Bus characteristics.</li>
+    <li><b>Reliability:</b> High.</li>
+    <li><b>Usage:</b> Large Corporate Sites and Campus Area Networks (CAN).</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- BUS TOPOLOGY -->
+<div style="overflow: hidden; margin-bottom: 25px;">
+  <img src="https://github.com/emmagh8/Assets/blob/main/Fundamentals/Networking/Bus_Topology.jpeg?raw=true" 
+       align="right" 
+       width="150" 
+       style="margin-left: 20px; border-radius: 5px;">
+  <h3>Bus Topology</h3>
+  <ul style="margin-top: 0;">
+    <li><b>Concept:</b> All nodes share a single communication line.</li>
+    <li><b>Reliability:</b> Low (backbone failure stops the entire network).</li>
+    <li><b>Usage:</b> Legacy systems or simple low-cost setups.</li>
+  </ul>
+</div>
 
 ---
 
