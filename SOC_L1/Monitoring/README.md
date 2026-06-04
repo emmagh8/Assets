@@ -85,7 +85,7 @@ Examples:
 
 <div align="center">
   <p>Inside the SOC: The Incident Response Pipeline.</p>
-  <img src="" width="500" height="auto">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Monitoring/Alert.png?raw=true" width="500" height="auto">
 </div>
 
 Example rule:
