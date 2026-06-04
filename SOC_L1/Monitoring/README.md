@@ -259,7 +259,7 @@ SOC teams measure analyst efficiency using metrics.
 - 5–30 alerts/day per L1 analyst
 - 10–75% false positive rate
 - <50% escalation rate
-- ~100% detection target
+- 100% detection target
 
 ---
 
