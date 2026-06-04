@@ -90,7 +90,7 @@ Examples:
 
 Example rule:
 
-> If a user fails login 4 times and succeeds on the 5th attempt → trigger brute-force alert
+If a user fails login 4 times and succeeds on the 5th attempt → trigger brute-force alert
 
 ---
 
@@ -143,31 +143,20 @@ Older alerts are usually handled first to reduce attacker dwell time.
 SOC reports are structured using the 5W model:
 
 ### Who
-- User
-- Hostname
-- IP address
-
+User, Hostname, IP address.
 ### What
-Actions performed:
-- Login attempts
-- File execution
-- Downloads
-
+Actions performed: login attempts, file execution, downloads.
 ### When
 Timeline of events
-
 ### Where
 Systems, devices, or IPs involved
-
 ### Why
 Reasoning behind the final verdict (most important part)
-
 ### Example
-
-> At 08:00 AM, user *mr.jams* accessed a phishing site from Laptop-HR-01.  
-> At 08:02 AM, the user downloaded a file named *mimikatz.exe*.  
-> SIEM flagged the activity as malicious due to credential dumping behavior.  
-> The alert was escalated to L2.
+At 08:00 AM, user *mr.jams* accessed a phishing site from Laptop-HR-01.  
+At 08:02 AM, the user downloaded a file named *mimikatz.exe*.  
+SIEM flagged the activity as malicious due to credential dumping behavior.  
+The alert was escalated to L2.
 
 ---
 
@@ -184,7 +173,7 @@ Steps:
 5. Validate using threat intelligence
 
 Goal:
-→ Determine if activity is malicious or legitimate
+Determine if activity is malicious or legitimate
 
 ---
 
