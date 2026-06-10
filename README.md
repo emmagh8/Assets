@@ -11,4 +11,5 @@
 ### 2.  SOC Level 1 Try Hack Me
 * [ Blue Team Introduction](./SOC_L1/Intro/README.md) 
 * [ SOC Team Internals](./SOC_L1/Monitoring/README.md)
+* [Core SOC Solutions](./SOC_L1/Solutions/README.md)
 ---
