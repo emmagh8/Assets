@@ -14,4 +14,5 @@
 * [Core SOC Solutions](./SOC_L1/Solutions/README.md)
 * [Cyber Defence Frameworks](./SOC_L1/Frameworks/README.md)
 * [Summit_Writeup](./SOC_L1/Writeup1/README.md)
+* [Eviction_Writeup](./SOC_L1/Writeup2/README.md)
 ---
