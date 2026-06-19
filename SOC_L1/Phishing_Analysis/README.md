@@ -230,12 +230,12 @@ Even perfect technical defenses will eventually be bypassed. The human layer mat
 
 ## 7. Key Takeaways
 
-1. **Start with the header, always.** The body is designed to deceive you. The header tells the truth.
-2. **Never interact with artifacts directly.** Copy URLs, hash files, use sandboxes — keep your analysis environment clean.
+1. **Start with the header, always.** The body is designed to deceive. The header tells the truth.
+2. **We never interact with artifacts directly.** Copy URLs, hash files, use sandboxes.
 3. **Reputation checks are fast wins.** A quick VirusTotal or Talos lookup can confirm maliciousness in seconds.
-4. **Sandboxes reveal what static analysis misses.** Obfuscated scripts and packed executables hide their behavior — let them run safely in isolation.
-5. **Defense is multi-layered.** SPF + DKIM + DMARC + SEG + trained users together are far stronger than any single control alone.
-6. **Document everything.** A well-documented case helps the whole team and builds your detection knowledge base over time.
+4. **Sandboxes reveal what static analysis misses.** Obfuscated scripts and packed executables hide their behavior and let them run safely in isolation.
+6. **Defense is multi-layered.** SPF + DKIM + DMARC + SEG + trained users together are far stronger than any single control alone.
+7. **Document everything.** A well-documented case helps the whole team and build detection knowledge base over time.
 
 ---
 
