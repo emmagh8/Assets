@@ -17,4 +17,5 @@
 * [Eviction_Writeup](./SOC_L1/Writeup2/README.md)
 * [Phishing Analysis](./SOC_L1/Phishing_Analysis/README.md)
 * [The_Greenholt_Phish_Writeup](./SOC_L1/Writeup3/README.md)
+* [Snapped_Phishing_Line_Writeup](./SOC_L1/Writeup4/README.md)
 ---
