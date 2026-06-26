@@ -17,7 +17,7 @@ a sandbox. Rather than just theory, the room simulates realistic scenarios that 
 
 ## 1. Email Infrastructure Fundamentals
 
-Before analyzing phishing, you need to understand how legitimate email actually works — because attackers exploit every layer of this process.
+Before analyzing phishing, you need to understand how legitimate email actually works because attackers exploit every layer of this process.
 
 ### Core Protocols
 
