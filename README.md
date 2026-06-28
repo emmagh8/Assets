@@ -1,6 +1,6 @@
 <h1 align="center">SOC Analyst Resources</h1>
 
-<h4 align="center">A curated list of resources I'm using on my journey to become a Security Analyst — built while completing the TryHackMe SOC Level 1 path.</h4>
+<h4 align="center">A curated list of resources I'm using on my journey to become a Security Analyst, built while completing the TryHackMe SOC Level 1 path.</h4>
 
 
 ## Table of Contents
@@ -18,4 +18,6 @@
 * [Phishing Analysis](./SOC_L1/Phishing_Analysis/README.md)
 * [The_Greenholt_Phish_Writeup](./SOC_L1/Writeup3/README.md)
 * [Snapped_Phishing_Line_Writeup](./SOC_L1/Writeup4/README.md)
+* [Phishing_Unfolding](./SOC_L1/Writeup5/README.md)
+
 ---
