@@ -176,31 +176,19 @@ Wireshark uses a color-coded system to visually distinguish traffic types and hi
 |---|---|---|
 | **Packet Numbers** | Each packet has a unique sequential ID | Navigation and investigation tracking in large captures |
 | **Find Packets** | Search by string, regex, hex, or display filter across List / Details / Bytes panes | Locate specific credentials, domains, or file signatures |
-| **Mark Packets** | Flag important packets (turns black); temporary — lost when file is closed | Quick highlighting during live investigation |
+| **Mark Packets** | Flag important packets (turns black); temporary lost when file is closed | Quick highlighting during live investigation |
 | **Packet Comments** | Persistent notes attached to individual packets inside the PCAP file | SOC documentation and evidence annotation |
 | **Export Packets** | Extract a subset of packets to a new PCAP file | Sharing specific evidence with incident responders |
 | **Export Objects** | Extract transferred files from protocol sessions (HTTP, SMB, FTP, TFTP, DICOM) | Recovering malware samples from captures |
 | **Time Display Format** | Switch from relative time to UTC | Attack timeline reconstruction and log correlation |
 | **Expert Info** | Wireshark auto-flags anomalies by severity | First-pass triage for protocol errors and suspicious behavior |
 
-### Expert Info Severity Levels
-
-| Severity | Indicator | Meaning |
-|---|---|---|
-| Chat | 🔵 Blue | Normal informational messages |
-| Note | 🟦 Dark Blue | Unusual but not necessarily malicious events |
-| Warning | 🟡 Yellow | Suspicious behavior worth investigating |
-| Error | 🔴 Red | Malformed or invalid packets |
-
-> **Caution:** Expert Info is a starting point, not a verdict. False positives are common — always validate flagged packets with manual analysis.
 
 ---
 
 ## 6. Packet Filtering
 
 Filtering is one of the most critical skills in Wireshark analysis. A raw packet capture during an active incident can contain millions of packets. Without filtering, finding the relevant traffic is like searching for a needle in a haystack.
-
-> **Golden rule: If you can click it → you can filter it.**
 
 ### Two Types of Filters
 
@@ -209,7 +197,7 @@ Applied **before** capture begins. Determines what gets recorded.
 
 - Reduces the volume of data written to disk
 - Must be defined before starting the capture session
-- **Risk:** An overly narrow filter can cause you to miss critical evidence — use with caution
+- **Risk:** An overly narrow filter can cause you to miss critical evidence use with caution
 
 #### Display Filters
 Applied **after** capture. Hides non-matching packets without deleting them from the file.
@@ -229,43 +217,25 @@ Applied **after** capture. Hides non-matching packets without deleting them from
 | **Apply as Column** | Adds any packet field as a visible column | Compare source ports, hostnames, or TTLs across packets |
 | **Follow Stream** | Reconstructs the full application-layer conversation | Read full HTTP exchanges, detect cleartext credentials, analyze C2 sessions |
 
-### Follow Stream — Supported Protocols
-
-`TCP` · `UDP` · `HTTP`
 
 ### Common Display Filter Syntax
 
-**By Protocol:**
-```
-http
-dns
-ftp
-ssh
-```
+**By Protocol:** http, dns, ftp, ssh
 
-**By Port:**
-```
-tcp.port == 80
-udp.port == 53
-tcp.port == 443
-```
+**By Port:** tcp.port == 80, udp.port == 53, tcp.port == 443
 
-**By IP Address:**
-```
-ip.addr == 192.168.1.10
-```
+**By IP Address:** ip.addr == 192.168.1.10
 
 ---
 
 ## 7. Key Takeaways
 
-**Logs tell you what happened. Packets show you everything.** Network traffic analysis is the difference between knowing an alert fired and understanding exactly what an attacker did, downloaded, or exfiltrated.
+**Logs tell what happened. Packets show everything.** Network traffic analysis is the difference between knowing an alert fired and understanding exactly what an attacker did, downloaded, or exfiltrated.
 
-- **Start with traffic context.** Understand whether you are looking at North-South or East-West traffic before placing your capture point — location determines visibility.
+- **Start with traffic context.** Understand whether we are looking at North-South or East-West traffic before placing our capture point location determines visibility.
 - **PCAP is the ground truth.** Logs and flow data are summaries. When the investigation requires certainty, PCAP delivers the full picture.
-- **Filtering is not optional.** Large captures are unusable without focused filtering. Display filters are non-destructive — apply them freely during analysis.
-- **Follow Stream is your most powerful tool.** It reconstructs human-readable conversations from raw packets and can expose cleartext credentials, C2 communications, and complete file transfers in seconds.
+- **Follow Stream is our most powerful tool.** It reconstructs human-readable conversations from raw packets and can expose cleartext credentials, C2 communications, and complete file transfers in seconds.
 - **Export Objects to recover evidence.** Files transferred over HTTP, SMB, or FTP can be extracted directly from the PCAP and submitted to sandbox or threat intelligence platforms.
 - **Expert Info is a triage accelerator, not a verdict.** Use it to surface anomalies quickly, then validate manually before escalating.
-- **Document inside the PCAP.** Packet comments persist with the file — annotate key packets so your findings are preserved when you share the capture with your team.
+- **Document inside the PCAP.** Packet comments persist with the file annotate key packets so our findings are preserved when we share the capture with our team.
 
