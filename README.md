@@ -20,4 +20,5 @@
 * [Snapped_Phishing_Line_Writeup](./SOC_L1/Writeup4/README.md)
 * [Phishing_Unfolding](./SOC_L1/Writeup5/README.md)
 * [Wireshark_Basics](./SOC_L1/Wireshark_Basics/README.md)
+* [Packet_Operations_Writeup](./SOC_L1/Packet_Operations/README.md)
 ---
