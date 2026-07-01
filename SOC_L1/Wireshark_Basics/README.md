@@ -126,7 +126,7 @@ Three complementary methods exist for observing network traffic, each with diffe
 
 ### Full Packet Capture (PCAP)
 
-PCAP captures every packet on the wire — headers and full payload.
+PCAP captures every packet on the wire headers and full payload.
 
 **Collection methods:**
 - **Network TAP:** Passive hardware device; zero impact on network performance
