@@ -49,7 +49,7 @@ Network traffic analysis fills that gap by inspecting the actual payload of ever
 
 **Beaconing:** A compromised host periodically contacts a C2 server at regular intervals to receive instructions. The regularity of these connections is the key detection signal.
 
-If a host is making DNS queries every 60 seconds like clockwork, that regularity is the anomaly — not the protocol itself.
+If a host is making DNS queries every 60 seconds like clockwork, that regularity is the anomaly not the protocol itself.
 
 ---
 
