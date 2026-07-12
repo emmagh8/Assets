@@ -21,4 +21,5 @@
 * [Phishing_Unfolding](./SOC_L1/Writeup5/README.md)
 * [Wireshark_Basics](./SOC_L1/Wireshark_Basics/README.md)
 * [Packet_Operations_Writeup](./SOC_L1/Packet_Operations/README.md)
+* [Traffic_Analysis_Writeup](./SOC_L1/Traffic_Analysis/README.md)
 ---
