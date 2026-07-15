@@ -493,9 +493,9 @@ NetworkMiner uses **passive fingerprinting** (reading TCP/IP stack behavior from
 
 ## Tools Used
 
-- **TryHackMe** — NetworkMiner room
-- **NetworkMiner 2.7.2** — primary analysis tool
-- **NetworkMiner 1.6.1** — frame-level analysis (Frames tab)
+- **TryHackMe:** NetworkMiner room
+- **NetworkMiner 2.7.2:** primary analysis tool
+- **NetworkMiner 1.6.1:** frame-level analysis (Frames tab)
 - **Exercise PCAPs:** mx-1.pcap, mx-2.pcap, case1.pcap, case2.pcap
 
 ---
